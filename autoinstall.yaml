@@ -1,0 +1,33 @@
+#cloud-config
+autoinstall:
+  version: 1
+  interactive-sections:
+    - network
+  ssh:
+    install-server: yes
+  search_drivers: true
+  storage:
+    layout:
+      name: lvm
+      sizing-policy: all
+      reset-partition: true
+  ubuntu-pro: false
+  packages:
+    - salt-common
+    - salt-minion
+    - cloud-init
+  #Actual cloudconfig goes here
+  user-data:
+    users:
+    - name: osadmin
+      sudo: ALL=(ALL) NOPASSWD:ALL
+      groups: users, sudo
+      lock_passwd: false
+      passwd: $1$gabagool$Xv.mvsiJBdFUzMOGsnJEf1
+      shell: /bin/bash
+      ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDkU9yWV8rIqINbvBLBwMoFBcly1mCYA5IlP1ne9r6n20lBgAPiR2Ai+1khyIrUgA7HSgYlGlj1t38rcInHZxWTxleJUz/o4H2md3OqzKmtflLuVzNnxyCNSLm+J+v2pWOeE6vRGrpYpUtRcvyIE25psrtaResC0okWooKuoGinmXZh1Cgk6IkXmbviPm7/seH6UwjwAfhecB8SpI0ggDb12qhmyXDv+35r09UxNP8GMWWGwhIJpaL+qDpAwOihToAj78tmQFLJ82Tn2Qz7nzh4hURdOi8R7weMwBk5p8+pBs81viLL0niPHczNo8Veaqpf7fAYKQxgxNTei55PsYEVPZ/uaz6vC3ayZZG6iBmsDSiUBIu8d5VbI0KioB6KS8+M5VSMFPYX/kv2LcT9Tb/NaohDHRk8BnbHUfufjb8yge2iBJRwKZXPHxJtTLFZ76UzAoDDYL0qnc3v3EWtZNTBLyP6lE+lfzdPDWO5us4AIDnucm+240PBYIyRmZLitKE=
+      write_files:
+      - path: /etc/salt/minion.d/master.conf
+        permissions: "0644"
+        content: "master: swift.cs.nor.ou.edu"
