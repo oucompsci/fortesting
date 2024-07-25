@@ -5,7 +5,6 @@ autoinstall:
     - network
   ssh:
     install-server: yes
-  search_drivers: true
   storage:
     layout:
       name: lvm
